@@ -1,0 +1,52 @@
+<div class="row">
+  <section class="col-lg-9">
+    <div class="row">
+      <div class="col-md-5 mb-3">
+        <img class="img-fluid card" ng-src="{{filmCtrl.film.Poster}}">
+      </div>
+      <div class="col-md-7">
+        <h1 class="mb-3">
+          {{ filmCtrl.film.Title }}
+          <small class="text-muted" ng-if="filmCtrl.film.Year">
+            ({{ filmCtrl.film.Year }})
+          </small>
+        </h1>
+        <dl class="row">
+          <dt class="col-md-5" ng-repeat-start="key in filmCtrl.infoKeys">
+            {{ key }}
+          </dt>
+          <dd class="col-md-7" ng-repeat-end>
+            {{ filmCtrl.film[key] }}
+          </dd>
+        </dl>
+      </div>
+    </div>
+    <div class="my-4">
+      <h5>Plot Summary</h5>
+      <p>{{ filmCtrl.film.Plot }}</p>
+    </div>
+    <div class="row">
+      <div class="col-md mb-4" ng-repeat="key in filmCtrl.crewKeys">
+        <h5>{{ key }}</h5>
+        <ui class="list-unstyled" ng-if="filmCtrl.film[key]">
+          <li ng-repeat="name in filmCtrl.film[key]">{{ name }}</li>
+        </ui>
+      </div>
+    </div>
+  </section>
+  <section class="col-lg">
+    <div class="list-group mb-4">
+      <a class="list-group-item list-group-item-action"
+         ng-href="/newlist/with/{{filmCtrl.film.imdbID}}">Add to List</a>
+      <a class="list-group-item list-group-item-action" target="_blank"
+         ng-href="{{ filmCtrl.shareLinks.twitter }}">Share on Twitter</a>
+      <a class="list-group-item list-group-item-action" target="_blank"
+         ng-href="{{ filmCtrl.shareLinks.facebook }}">Share on Facebook</a>
+    </div>
+    <div ng-if="filmCtrl.suggestedLists.length">
+      <h6 class="mb-0">{{ filmCtrl.suggestedListsKind }} Lists</h6>
+      <hr class="mt-1">
+      <my-lists-widget compact="true" lists="filmCtrl.suggestedLists"></my-lists-widget>
+    </div>
+  </section>
+</div>

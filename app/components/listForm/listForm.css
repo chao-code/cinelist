@@ -1,0 +1,16 @@
+.order-input {
+  display: inline-block;
+  width: 2.5em
+}
+
+.film-title {
+  display: inline
+}
+
+.film-results {
+  left: 8.5em
+}
+
+.cursor-pointer {
+  cursor: pointer
+}

@@ -1,0 +1,40 @@
+.bd-search {
+  position: relative
+}
+
+.bd-search .form-control:focus {
+  background-color: #fff
+}
+
+.bd-search-results {
+  display: block;
+  padding: 0;
+  margin-top: 1em;
+  overflow: hidden;
+  font-size: .9rem;
+  width: 19.5em
+}
+
+.bd-search-results .dropdown-item {
+  padding-right: .75rem;
+  padding-left: .75rem;
+  white-space: normal
+}
+
+.bd-search-results .dropdown-item:first-child {
+  margin-top: .5rem
+}
+
+.bd-search-results .dropdown-item:last-child {
+  margin-bottom: .5rem
+}
+
+.bd-search-results .no-results {
+  padding: .75rem 1rem;
+  color: #7a7a7a;
+  text-align: center
+}
+
+.btn {
+  cursor: pointer
+}

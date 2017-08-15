@@ -1,0 +1,95 @@
+<div class="row" ng-show="!listCtrl.edit.isOn">
+  <section class="col-lg-9">
+    <h2 class="mb-0">{{ listCtrl.list.subject }}</h2>
+    <small class="text-muted">
+      <span>By {{ listCtrl.list.listedBy }}.</span>
+      <span>Created on {{ listCtrl.list.createdOn | date:'mediumDate' }}.</span>
+      <span ng-if="listCtrl.list.editedOn">Last edited on {{ listCtrl.list.editedOn | date:'mediumDate' }}.</span>
+    </small>
+    <p class="my-4" ng-bind-html="listCtrl.list.description | newlines"></p>
+    <hr class="mb-2">
+    <div class="d-flex">
+      <span class="mr-auto">Showing All {{ listCtrl.list.filmCount }} Films</span>
+      <span>Sort by: &nbsp;</span>
+      <form class="form-inline">
+        <select class="form-control form-control-sm" ng-model="listCtrl.orderBy"
+                ng-options="item.value as item.label for item in listCtrl.orderBys">
+        </select>
+      </form>
+    </div>
+    <ul class="list-unstyled">
+      <li class="my-4" ng-repeat="film in listCtrl.list.films | orderBy:listCtrl.orderBy">
+        <div class="row">
+          <div class="col-2">
+            <a ng-href="/film/{{ film.imdbID }}">
+              <img class="img-fluid card" ng-src="{{ film.poster }}">
+            </a>
+          </div>
+          <div class="col">
+            <h4 class="mb-0">
+              {{ ($index+1) + '. ' + film.title }}
+              <small class="text-muted">({{ film.year }})</small>
+            </h4>
+            <small>
+              <span>Metascore: {{ film.metascore || 'N/A' }}</span>
+              -
+              <span>IMDb Rating: {{ film.imdbRating || 'N/A' }}</span>
+              -
+              <span>Rotten Tomatoes: {{ film.rottenTomatoes || 'N/A' }}</span>
+            </small>
+            <div class="mt-2" ng-if="film.comment">
+              "{{ film.comment }}"
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </section>
+  <section class="col-lg">
+    <div class="list-group mb-4">
+      <a class="list-group-item list-group-item-action" href=""
+         data-toggle="modal" data-target="#checkModal">Edit List</a>
+      <a class="list-group-item list-group-item-action" target="_blank"
+         ng-href="{{ listCtrl.shareLinks.twitter }}">Share on Twitter</a>
+      <a class="list-group-item list-group-item-action" target="_blank"
+         ng-href="{{ listCtrl.shareLinks.facebook }}">Share on Facebook</a>
+    </div>
+    <div ng-if="listCtrl.suggestedLists.length">
+      <h6 class="mb-0">Recent Lists</h6>
+      <hr class="mt-1">
+      <my-lists-widget compact="true" lists="listCtrl.suggestedLists"></my-lists-widget>
+    </div>
+    <div class="modal" id="checkModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Enter Passcode</h5>
+            <button class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group" ng-class="{'has-danger': listCtrl.modal.error}">
+              <label class="form-control-label">Passcode:</label>
+              <input class="form-control" type="text" ng-model="listCtrl.modal.passcode">
+              <div class="form-control-feedback" ng-show="listCtrl.modal.error">Wrong Passcode</div>
+              <small class="form-text text-muted">Enter the Passcode of the list to start editing</small>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button class="btn btn-primary" ng-click="listCtrl.modal.check()">Enter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<section ng-if="listCtrl.edit.isOn">
+  <h3 class="mb-0">Edit List</h3>
+  <hr class="mt-1">
+  <my-list-form list="listCtrl.edit.list"
+                on-save="listCtrl.edit.save(list)"
+                on-cancel="listCtrl.edit.cancel()">
+  </my-list-form>
+</section>

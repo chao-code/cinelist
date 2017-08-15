@@ -1,0 +1,34 @@
+<nav class="navbar navbar-toggleable-sm navbar-inverse bg-inverse">
+  <div class="container">
+    <button class="navbar-toggler navbar-toggler-right" data-toggle="collapse" data-target="#navbarMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/">CineList</a>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarMenu">
+      <form class="form-inline mr-md-3 bd-search">
+        <input class="form-control form-control-sm my-2" type="text" placeholder="Search..."
+          ng-model="navbarCtrl.query"
+          ng-model-options="navbarCtrl.option"
+          ng-change="navbarCtrl.search()">
+        <div class="dropdown-menu bd-search-results" ng-show="navbarCtrl.results">
+          <a class="dropdown-item" ng-href="/film/{{film.imdbID}}" ng-repeat="film in navbarCtrl.results track by film.imdbID">
+              <div class="row">
+                <div class="col-3">
+                  <img class="img-fluid" ng-src="{{film.poster}}">
+                </div>
+                <div class="col">
+                  {{ film.title }}
+                  <small class="text-muted">({{ film.year }})</small>
+                </div>
+              </div>
+          </a>
+          <div class="dropdown-item no-results" ng-if="!navbarCtrl.results.length">
+            Sorry, there are no results for that search.
+          </div>
+        </div>
+      </form>
+      <a class="btn btn-sm btn-primary my-2 my-md-auto" href="/newlist">Create a List</a>
+    </div>
+  </div>
+</nav>

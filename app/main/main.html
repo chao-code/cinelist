@@ -1,0 +1,29 @@
+<section>
+  <h1 class="display-4 text-center">
+    What are you watching?
+  </h1>
+  <p class="lead text-center">
+    <a href="/newlist">Create a list</a>
+    and share with your friends...
+  </p>
+</section>
+<section class="my-5" ng-if="mainCtrl.popularFilms.length">
+  <h6 class="mb-0">Popular Films</h6>
+  <hr class="mt-1">
+  <div class="row">
+    <div class="col-6 col-md-3 mb-3"
+         ng-repeat="film in mainCtrl.popularFilms | limitTo: mainCtrl.numShown track by film.imdbID">
+      <a class="card" ng-href="/film/{{film.imdbID}}">
+        <img class="card-img img-fluid" ng-src="{{film.poster}}">
+      </a>
+    </div>
+  </div>
+  <button class="btn btn-sm btn-link float-right" href=""
+     ng-if="mainCtrl.numShown < 100"
+     ng-click="mainCtrl.showMore()">Show More</button>
+</section>
+<section ng-if="mainCtrl.popularLists.length">
+  <h6 class="mb-0">Popular Lists</h6>
+  <hr class="mt-1">
+  <my-lists-widget compact="false" lists="mainCtrl.popularLists"></my-lists-widget>
+</section>

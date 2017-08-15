@@ -1,0 +1,21 @@
+<ui class="list-unstyled">
+  <li class="my-3" ng-repeat="list in $ctrl.lists track by $index">
+    <div ng-class="{'row': !$ctrl.compact}">
+      <div ng-class="{'col-md-4': !$ctrl.compact}">
+        <div class="row no-gutters mb-2">
+          <div class="col" ng-repeat="n in [0, 1, 2, 3, 4] track by $index">
+            <a ng-href="/list/{{ list.listID }}">
+              <img class="img-fluid card" ng-src="{{ list.posters[n] | posterCrop }}">
+            </a>
+          </div>
+        </div>
+      </div>
+      <div ng-class="{'col-md-8': !$ctrl.compact}">
+        <h5 class="mb-0" ng-if="!$ctrl.compact">{{ list.subject }}</h5>
+        <h6 class="mb-0" ng-if="$ctrl.compact">{{ list.subject }}</h6>
+        <small class="text-muted">{{ list.filmCount }} films listed by {{ list.listedBy }}</small>
+        <div ng-if="!$ctrl.compact">{{ list.description.slice(0, list.description.indexOf('\n')) }}</div>
+      </div>
+    </div>
+  </li>
+</ui>

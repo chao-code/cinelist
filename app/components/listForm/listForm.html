@@ -1,0 +1,87 @@
+<section>
+  <div class="row">
+    <div class="col-md">
+      <div class="form-group" ng-class="{'has-danger': formCtrl.showError && !list.subject}">
+        <label class="form-control-label" for="subjectInput">Subject</label>
+        <input class="form-control" type="text" id="subjectInput" ng-model="list.subject">
+        <small class="form-text text-muted">Required</small>
+      </div>
+      <div class="form-group" ng-class="{'has-danger': formCtrl.showError && !list.listedBy}">
+        <label class="form-control-label" for="listedByInput">Listed By</label>
+        <input class="form-control" type="text" id="listedByInput" ng-model="list.listedBy">
+        <small class="form-text text-muted">Required</small>
+      </div>
+      <div class="form-group">
+        <label class="form-control-label" for="passcodeInput">Passcode</label>
+        <input class="form-control" type="text" id="passcodeInput" ng-model="list.passcode">
+        <small class="form-text text-muted">Use Passcode to edit this list later</small>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="form-group">
+        <label class="form-control-label" for="descriptionInput">Description</label>
+        <textarea class="form-control" id="descriptionInput" rows="12"
+                  ng-model="list.description"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="row my-4">
+    <div class="col col-md bd-search">
+      <div class="input-group" ng-class="{'has-danger': formCtrl.showError && !list.films.length}">
+        <span class="input-group-addon">Add to List</span>
+        <input class="form-control" type="text" placeholder="Enter Film Name..."
+              ng-model="formCtrl.query"
+              ng-model-options="formCtrl.option"
+              ng-change="formCtrl.search()">
+      </div>
+      <div class="dropdown-menu bd-search-results film-results" ng-show="formCtrl.results">
+        <div class="dropdown-item" ng-click="formCtrl.addFilm(film)" ng-repeat="film in formCtrl.results track by film.imdbID">
+          <div class="row cursor-pointer">
+            <div class="col-3">
+              <img class="img-fluid" ng-src="{{ film.poster }}">
+            </div>
+            <div class="col">
+              {{ film.title }}
+              <small class="text-muted">({{ film.year }})</small>
+            </div>
+          </div>
+        </div>
+        <div class="dropdown-item no-results" ng-if="!formCtrl.results.length">
+          Sorry, there are no results for that search.
+        </div>
+      </div>
+    </div>
+    <div class="col-5 col-md">
+      <button class="btn btn-primary float-right" ng-click="formCtrl.save()">Save</button>
+      <button class="btn btn-secondary float-right mr-3" ng-click="formCtrl.cancel()">Cancel</button>
+    </div>
+  </div>
+  <div class="alert alert-info alert-dismissible fade show" role="alert" ng-if="formCtrl.message">
+    <button class="close" data-dismiss="alert">
+      <span>&times;</span>
+    </button>
+    {{ formCtrl.message }}
+  </div>
+  <ul class="list-group px-3">
+    <li class="list-group-item row" ng-repeat="film in list.films track by film.imdbID">
+      <div class="col-2 col-lg-1 px-1 px-md-2">
+        <img class="img-fluid card" ng-src="{{ film.poster }}">
+      </div>
+      <div class="col">
+        <input class="form-control text-center mr-2 py-1 px-1 mb-1 order-input" type="text"
+               ng-keyup="formCtrl.keyUp($event, $index)" ng-value="$index + 1">
+        <h5 class="film-title">
+          {{ film.title }}
+          <span class="text-muted">({{ film.year}})</span>
+        </h5>
+        <input class="form-control form-control-sm mt-3" type="text" placeholder="Add a Comment"
+               ng-model="film.comment">
+      </div>
+      <div class="col-1">
+        <button class="close" ng-click="formCtrl.removeFilm($index)">
+          <span>&times;</span>
+        </button>
+      </div>
+    </li>
+  </ul>
+</section>
