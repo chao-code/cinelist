@@ -127,7 +127,7 @@ angular.module('listData.services', [])
         let imdbID = film.imdbID;
         let poster = film.poster;
         if (film.index < 5) {
-          promises.push(listInfosRef.child(listID + '/posters/' + imdbID).set(poster));
+          promises.push(listInfosRef.child(listID + '/posters/' + imdbID + '/poster').set(poster));
         }
         promises.push(listFilmsRef.child(listID + '/' + imdbID + '/poster').set(poster));
       });
