@@ -59,10 +59,10 @@ angular.module('listData.services', [])
     }
 
     function addListsByFilms(listID, imdbIDs) {
-      imdbIDs.forEach(imdbID => {
+      imdbIDs.forEach((imdbID, index) => {
         listsByFilmRef
           .child(imdbID + '/' + listID)
-          .set(true);
+          .set(index);
       });
     }
 
